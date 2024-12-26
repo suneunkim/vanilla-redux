@@ -48,9 +48,53 @@ Learning Vanilla-Redux and React-Redux
 - 같은 입력(상태와 액션)에는 항상 같은 출력(새로운 상태)이 보장됨
 - 예측 가능한 상태 변화
 
-## 참고 링크
+### 참고 링크
 
 - https://ko.redux.js.org/introduction/getting-started
 - https://ko.redux.js.org/tutorials/fundamentals/part-1-overview
 - https://ko.redux.js.org/tutorials/essentials/part-1-overview-concepts
 - https://ko.redux.js.org/understanding/thinking-in-redux/glossary
+
+## React Redux
+
+### Provider
+
+- 리덕스 스토어를 React 애플리케이션 전체에 제공
+- 최상위 컴포넌트를 감싸 모든 하위 컴포넌트에서 리덕스 사용 가능
+
+```jsx
+<Provider store={store}>
+  <App />
+</Provider>
+```
+
+### useSelector
+
+- store.getState()와 동일한 역할
+- 리덕스 스토어의 상태를 선택하고 컴포넌트에 연결
+
+### useDispatch
+
+- store.dispatch()와 동일한 역할
+- 컴포넌트에 액션을 스토어에 전달
+- 상태 변경을 위한 액션 실행
+
+---
+
+## React와 Vanilla JS의 상태 관리 및 렌더링 차이
+
+### 1. DOM 조작 방식
+
+Vanilla JS는 `createElement()`와 `appendChild()`를 사용하여 DOM을 직접 조작하지만, React는 가상 DOM을 활용해 렌더링을 추상화합니다. 특히 배열의 요소를 화면에 표시할 때, Vanilla JS는 `forEach`로 순회하며 직접 요소를 생성하고 추가하지만, React는 `map()`을 통해 React 엘리먼트를 생성하고 렌더링을 React에 위임합니다.
+
+### 2. 상태 관리
+
+Vanilla JS에서는 배열이나 객체를 직접 `push()`, `splice()` 등으로 변경하지만, React는 상태의 불변성을 유지합니다. 스프레드 연산자나 `map()`, `filter()` 등을 사용해 새로운 상태 객체를 생성하여 상태 변경을 관리합니다.
+
+### 3. 이벤트 처리
+
+Vanilla JS는 `addEventListener()`로 이벤트를 직접 바인딩하는 반면, React는 합성 이벤트(Synthetic Events)를 제공합니다. `onClick`, `onSubmit`과 같은 카멜케이스 이벤트 핸들러를 통해 이벤트를 처리하며, 브라우저 이벤트를 추상화하고 최적화된 이벤트 시스템을 제공합니다.
+
+### 4. 렌더링 방식
+
+Vanilla JS는 상태 변경 시 필요한 DOM 요소를 수동으로 업데이트해야 하지만, React는 상태 변경을 감지하고 가상 DOM을 통해 효율적으로 실제 DOM을 업데이트합니다. 이를 통해 불필요한 DOM 조작을 최소화하고 성능을 최적화합니다.

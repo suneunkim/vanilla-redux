@@ -79,6 +79,70 @@ Learning Vanilla-Redux and React-Redux
 - 컴포넌트에 액션을 스토어에 전달
 - 상태 변경을 위한 액션 실행
 
+## Redux Toolkit
+
+### configureStore
+
+- Redux의 `createStore`를 대체하는 더 강력한 스토어 생성 함수
+- 여러 리듀서를 쉽게 결합하고 미들웨어 설정 가능 (redux-thunk 등)
+
+```jsx
+const store = configureStore({
+  reducer: {
+    todos: todoReducer,
+    counter: counterReducer,
+  },
+})
+```
+
+### createSlice
+
+- Redux Tookit의 핵심 함수로 리듀서와 액션 생성자를 동시에 생성
+- 각 슬라이스별로 상태, 리듀서, 액션을 간결하게 정의
+- Immer 라이브러리를 통해 불변성 자동 관리
+
+#### 주요 특징
+
+- `name`: 슬라이스의 이름
+- `initialState`: 초기 상태값
+- `reducers`: 상태 변경 로직을 정의하는 메서드 객체
+  - 각 메서드는 자동으로 해당 액션의 생성자가 됨
+  - 직접적인 상태 변경을 허용 (내부적으로 불변성 유지)
+
+```jsx
+const todoSlice = createSlice({
+  name: 'todos',
+  initialState: [],
+  reducers: {
+    addTodo: (state, action) => {
+      // 불변성을 직접 고려하지 않아도 됨
+      state.push(action.payload)
+    },
+    deleteTodo: (state, action) => {
+      return state.filter((todo) => todo.id !== action.payload)
+    },
+  },
+})
+```
+
+#### Redux Toolkit의 불변성 처리
+
+- Immer 라이브러리를 통해 내부적으로 불변성을 유지합니다.
+- Redux Toolkit에서는 배열을 직접 변경하는 경우, `return`문을 작성하지 않습니다.
+- 기존 Redux 방식처럼 새로운 상태 객체를 생성하는 경우는 `return`으로 새 상태를 반환합니다.
+
+```jsx
+// 직접 변경(mutate) - return 불필요
+addTodo: (state, action) => {
+  state.push(action.payload)
+}
+
+// 새 상태 생성 - return 필요
+deleteTodo: (state, action) => {
+  return state.filter((todo) => todo.id !== action.payload)
+}
+```
+
 ---
 
 ## React와 Vanilla JS의 상태 관리 및 렌더링 차이

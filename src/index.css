@@ -1,0 +1,9 @@
+#container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 80px;
+}
+
+.stats-table {
+  max-width: 1200px;
+}
